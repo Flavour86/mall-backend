@@ -1,6 +1,6 @@
 import express from 'express';
 // import db from './mongodb/db.js';
-// import router from './routes/index.js';
+import router from '../routes/index.js';
 import cookieParser from 'cookie-parser'
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
@@ -35,13 +35,13 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false,
-    maxAge: 365 * 24 * 60 * 60 * 1000,
+    maxAge: 365 * 24 * 60 * 60 * 1000
   },
   store: new MongoStore({
     url: config.sessionStorageURL
   })
 }))
-// router(app);
+router(app);
 // app.use(history());
 console.log('*********************************')
 console.log(`service start on ${config.port}`)
