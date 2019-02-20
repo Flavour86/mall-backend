@@ -28,6 +28,7 @@
     "nodemon": "^1.18.3"
   },
   "dependencies": {
+    "assert": "^1.4.1",
     "blueimp-md5": "^2.10.0",
     "body-parser": "^1.18.2",
     "connect-mongo": "^2.0.0",
@@ -35,6 +36,7 @@
     "crypto": "^1.0.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "jsonwebtoken": "^8.5.0",
     "mongoose": "^4.13.7"
   },
   "bugs": {
