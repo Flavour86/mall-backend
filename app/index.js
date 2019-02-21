@@ -17,7 +17,7 @@ app.all('*', (req, res, next) => {
   res.header("Access-Control-Allow-Credentials", true); //可以带cookies
   res.header("X-Powered-By", '3.2.1')
   if (req.method === 'OPTIONS') {
-    res.send(200);
+    res.sendStatus(200);
   } else {
     next();
   }
@@ -43,6 +43,11 @@ app.use(session({
 }))
 router(app);
 // app.use(history());
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.sendStatus(500);
+});
+
 console.log('*********************************')
 console.log(`service start on ${config.port}`)
 console.log('*********************************')

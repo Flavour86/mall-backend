@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  fetch('http://localhost:3030/user/register', {
+    method: 'POST',
+    body: JSON.stringify({
+      // userName: 'aa',
+      passWord: '123'
+    }),
+    headers: {
+      'content-type': 'application/json'
+    }
+  })
+</script>
+</body>
+</html>

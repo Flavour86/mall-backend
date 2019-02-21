@@ -1,7 +1,10 @@
 import Base from '../common/base'
 import Login from './login'
+import register from './register'
+
 const controllerCallback = {
-  Login
+  Login,
+  register
 }
 
 class User extends Base {
@@ -9,10 +12,7 @@ class User extends Base {
     super()
 
     Object.keys(controllerCallback).forEach(key => {
-
-      this[key] = (...args) => {
-        controllerCallback[key].apply(this, [...args, this])
-      }
+      this[key] = this.catchErrorHandler(controllerCallback[key])
     })
   }
 }
