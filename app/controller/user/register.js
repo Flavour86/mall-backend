@@ -1,7 +1,6 @@
-
 export default async function (req, res, next, instance) {
-  const {userName, passWord} = req
-  console.log(userName.length, passWord)
+  const {username, passWord} = req.body
+  console.log(username.length, passWord)
   res.send({
     status: 'err',
     message: 'lose'

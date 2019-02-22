@@ -10,10 +10,7 @@ const controllerCallback = {
 class User extends Base {
   constructor() {
     super()
-
-    Object.keys(controllerCallback).forEach(key => {
-      this[key] = this.catchErrorHandler(controllerCallback[key])
-    })
+    this.bindFnToInstance(controllerCallback)
   }
 }
 

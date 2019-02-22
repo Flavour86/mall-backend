@@ -1,4 +1,4 @@
-export default async (req, res, next, instance) => {
+export default function (req, res, next, instance) {
   console.log(req.url, instance)
   res.send({
     status: 200,
