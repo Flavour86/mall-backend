@@ -2,9 +2,10 @@ import isFunction from 'lodash/isFunction'
 
 class Base {
   catchErrorHandler (fn) {
+    const self = this
     return (req, res, next) => {
       try {
-        const controllerFn = fn.apply(this, [req, res, next, this])
+        const controllerFn = fn.apply(self, [req, res, next, self])
         if (controllerFn && controllerFn.then && isFunction(controllerFn.then)) {
           controllerFn.catch(err => {
             next(err)

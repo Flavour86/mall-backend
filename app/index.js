@@ -44,7 +44,7 @@ app.use(session({
 router(app);
 // app.use(history());
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
+  console.error(err.stack, 'err.stack');
   res.sendStatus(500);
 });
 
