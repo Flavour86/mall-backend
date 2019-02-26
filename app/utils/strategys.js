@@ -14,5 +14,10 @@ export default {
     if (rule.len && value.length && value.length > rule.len) {
       throw rule.message
     }
+  },
+  regExpPattern: function (rule, value) {
+    if (!rule.regExpPattern.test(value)) {
+      throw rule.message
+    }
   }
 }

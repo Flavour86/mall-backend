@@ -6,18 +6,26 @@
 </head>
 <body>
 <script>
-  fetch('http://localhost:3030/user/register', {
+  // fetch('http://localhost:3030/user/register', {
+  //   method: 'POST',
+  //   body: JSON.stringify({
+  //     username: 'a221',
+  //     password: '12345',
+  //     email: 'jiangdianen@qq.com'
+  //   }),
+  //   headers: {
+  //     'content-type': 'application/json'
+  //   }
+  // })
+  fetch('http://localhost:3030/user/login', {
     method: 'POST',
     body: JSON.stringify({
       username: 'a221',
-      password: '12345'
+      password: '12345',
     }),
     headers: {
       'content-type': 'application/json'
     }
-  })
-  fetch('http://localhost:3030/user/login', {
-    method: 'GET'
   })
 </script>
 </body>

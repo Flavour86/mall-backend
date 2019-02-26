@@ -1,12 +1,8 @@
 import validateParams from '../../utils/validator'
+import { email } from '../../utils/pattern'
 import {sendRes} from '../../utils/requestSend'
+import { validateError } from '../../utils/helper'
 import User from '../../models/user'
-
-const validateError = (res, err) => {
-  sendRes(res, 400, {
-    message: err
-  })
-}
 
 async function validateSuccess(req, res, next, instance) {
   const {username, password} = req.body
@@ -24,6 +20,7 @@ async function validateSuccess(req, res, next, instance) {
       salt,
       password: hash
     }).then(newUser => {
+
       const token = instance.generateToken({
         username,
         password: hash,
@@ -40,8 +37,7 @@ async function validateSuccess(req, res, next, instance) {
 }
 
 export default async function (req, res, next, instance) {
-  const {username, password} = req.body
-  const rule = {
+  const rules = {
     username: [
       {required: true, message: '缺少username参数！'},
       {type: String, message: 'username参数必须为字符串！'},
@@ -50,12 +46,13 @@ export default async function (req, res, next, instance) {
     password: [
       {required: true, message: '缺少password参数！'},
       {type: String, message: 'password参数必须为字符串！'}
+    ],
+    email: [
+      {required: true, message: '缺少email参数！'},
+      {regExpPattern: email, message: 'email为非合法email!'}
     ]
   }
-  validateParams({
-    username,
-    password
-  }, rule, function() {
+  validateParams(req.body, rules, function() {
     validateSuccess(req, res, next, instance).catch(err => {
       next(err)
     })

@@ -16,6 +16,7 @@ class User extends Base {
     this.bindFnToInstance.call(this, controllerCallback)
   }
 
+
   generateToken ({username, password, host}) {
     const secretKey = 'secret'
     const options = {
@@ -32,16 +33,13 @@ class User extends Base {
 
   generatePasswordHash (pw) {
     return new Promise((resolve, reject) => {
-      console.log(bcrypt, bcrypt.genSalt)
       try {
         bcrypt.genSalt(saltRounds, function (err, salt) {
-          console.log(err, salt, 'genSalt')
           if (err) {
             reject(err)
             return
           }
           bcrypt.hash(pw, salt, function (err, hash) {
-            console.log(err, hash, 'hash')
             if (err) {
               reject(err)
               return

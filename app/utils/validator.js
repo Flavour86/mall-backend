@@ -7,7 +7,8 @@ import strategyList from './strategys'
 const insetType = [
   'required',
   'type',
-  'len'
+  'len',
+  'regExpPattern'
 ]
 
 const getValidateType = rule => {
@@ -23,7 +24,7 @@ const getValidateType = rule => {
 /**
  *
  * @param params object  需要验证的对象
- * @param rule  object
+ * @param rules  object
  * @param callback fn
  *
  * @参数结构
@@ -46,24 +47,25 @@ const getValidateType = rule => {
  *   console.log(err)
  * }
  */
-const validateParams = (params, rule, successCallback, callback) => {
+const validateParams = (params = {}, rules, successCallback, callback) => {
   assert(Object.prototype.toString.call(params) === '[object Object]', 'params 参数必须是object！')
-  assert(Object.prototype.toString.call(rule) === '[object Object]', 'rule 参数必须是object！')
+  assert(Object.prototype.toString.call(rules) === '[object Object]', 'rule 参数必须是object！')
   assert(isFunction(callback), 'callback 参数必须是function！')
   assert(isFunction(successCallback), 'successCallback 参数必须是function！')
+
+
   try {
-    Object.keys(params).forEach(field => {
-      const rules = rule[field]
-      assert(isArray(rules), `rule.${field}必须是一个数组！`)
-      rules.forEach(ruleItem => {
-        const validate = getValidateType(ruleItem)
-        validate.apply(null, [ruleItem, params[field]])
+    Object.keys(rules).forEach(field => {
+      const ruleItems = rules[field]
+      assert(isArray(ruleItems), `rules.${field}必须是一个数组！`)
+      ruleItems.forEach(item => {
+        const validate = getValidateType(item)
+        validate.apply(null, [item, params[field]])
       })
     })
     successCallback()
   } catch (e) {
     callback(e)
-    return
   }
 }
 
