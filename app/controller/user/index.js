@@ -2,12 +2,15 @@ import jsonwebtoken from 'jsonwebtoken'
 import Base from '../common/base'
 import Login from './login'
 import register from './register'
+import Logout from './logout'
 import bcrypt from "bcrypt";
+import {secretKey} from '../../constants'
 const saltRounds = 10
 
 const controllerCallback = {
   Login,
-  register
+  register,
+  Logout
 }
 
 class User extends Base {
@@ -18,7 +21,6 @@ class User extends Base {
 
 
   generateToken ({username, password, host}) {
-    const secretKey = 'secret'
     const options = {
       algorithm: 'HS256',
       expiresIn: 60 * 5

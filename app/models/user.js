@@ -23,7 +23,10 @@ const UserSchema = new Schema({
     unique: true
   },
   avatar: {
-    type: String,
+    type: String
+  },
+  token: {
+    type: String
   }
 });
 

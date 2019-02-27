@@ -3,11 +3,11 @@ import bcrypt from "bcrypt";
 import { validateError } from '../../utils/helper'
 import {sendRes} from '../../utils/requestSend'
 import User from '../../models/user'
+import { time } from '../../constants'
 
 async function login(req, res, next, instance) {
   const {username, password} = req.body
   const user = await User.findOne({username})
-  console.log(user)
   if (!user) {
     sendRes(res, 400, {
       message: '用户不存在,请先注册！'
@@ -20,6 +20,9 @@ async function login(req, res, next, instance) {
       username,
       password: user.password,
       host: req.hostname
+    })
+    await User.update({_id: user._id}, {
+      lastLoginTime: Date.now() + time
     })
     sendRes(res, 200, {
       accessToken: token,
@@ -35,7 +38,7 @@ async function login(req, res, next, instance) {
 }
 
 
-export default function (req, res, next, instance) {
+export default async function (req, res, next, instance) {
   const rules = {
     username: [
       {required: true, message: '缺少username参数！'},
