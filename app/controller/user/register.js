@@ -2,10 +2,11 @@ import validateParams from '../../utils/validator'
 import { email } from '../../utils/pattern'
 import {sendRes} from '../../utils/requestSend'
 import { validateError } from '../../utils/helper'
+import { time } from '../../constants'
 import User from '../../models/user'
 
 async function validateSuccess(req, res, next, instance) {
-  const {username, password} = req.body
+  const {username, password, email} = req.body
   const user = await User.findOne({username})
 
   if (user) {
@@ -18,7 +19,10 @@ async function validateSuccess(req, res, next, instance) {
     User.create({
       username,
       salt,
-      password: hash
+      password: hash,
+      email,
+      createTime: Date.now() + time,
+      lastLoginTime: Date.now() + time
     }).then(newUser => {
 
       const token = instance.generateToken({
